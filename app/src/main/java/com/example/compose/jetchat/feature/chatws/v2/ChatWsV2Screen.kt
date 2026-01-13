@@ -75,8 +75,11 @@ private fun ChatWsV2Content(
             )
 
             UserInput(
-                onMessageSent = {
-                    uiState.addMessage(ChatMessage(authorMe, it, timeNow))
+                onMessageSent = { text ->
+                    connectToServer.send(text)   // ✅ SEND TO WS
+                    uiState.addMessage(          // optional: echo locally
+                        ChatMessage(authorMe, text, timeNow)
+                    )
                 },
                 resetScroll = {
                     scope.launch { scrollState.scrollToItem(0) }
@@ -85,6 +88,7 @@ private fun ChatWsV2Content(
                     .navigationBarsPadding()
                     .imePadding()
             )
+
         }
     }
 }

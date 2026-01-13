@@ -60,6 +60,11 @@ object connectToServer {
         webSocket?.send("FINAL:$text")
     }
 
+    fun send(text: String) {
+        if (text.isBlank()) return
+        webSocket?.send("$text")
+    }
+
     fun sendPartial(text: String) {
         if (text.isBlank()) return
         webSocket?.send("PARTIAL:$text")
