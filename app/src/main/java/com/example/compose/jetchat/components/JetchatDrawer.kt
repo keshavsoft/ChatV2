@@ -88,7 +88,8 @@ fun JetchatDrawerContent(
 
         if (chatWsExpanded) {
             val chatWsItems = listOf(
-                DrawerDestination.ChatWsV1
+                DrawerDestination.ChatWsV1,
+                DrawerDestination.ChatWsV2
             )
 
             chatWsItems.forEach { dest ->

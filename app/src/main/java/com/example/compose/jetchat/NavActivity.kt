@@ -21,6 +21,7 @@ import com.example.compose.jetchat.components.JetchatDrawer
 import com.example.compose.jetchat.core.navigation.DrawerDestination
 import com.example.compose.jetchat.databinding.ContentMainBinding
 import com.example.compose.jetchat.feature.chatws.v1.ChatWsV1Screen
+import com.example.compose.jetchat.feature.chatws.v2.ChatWsV2Screen
 
 
 import kotlinx.coroutines.CoroutineScope
@@ -165,9 +166,16 @@ private fun DrawerDestinationContent(
     onBackToHome: () -> Unit
 ) {
     when (selectedDestination) {
-
         // Voice to Text variants – simple single-page screens
         DrawerDestination.ChatWsV1 -> {
+            ChatWsSection(
+                destination = selectedDestination,
+                drawerState = drawerState,
+                scope = scope,
+                onBackToHome = onBackToHome
+            )
+        }
+        DrawerDestination.ChatWsV2 -> {
             ChatWsSection(
                 destination = selectedDestination,
                 drawerState = drawerState,
@@ -197,6 +205,15 @@ private fun ChatWsSection(
     when (destination) {
         DrawerDestination.ChatWsV1 -> {
             ChatWsV1Screen(
+                onNavIconPressed = {
+                    scope.launch {
+                        drawerState.open()
+                    }
+                }
+            )
+        }
+        DrawerDestination.ChatWsV2 -> {
+            ChatWsV2Screen(
                 onNavIconPressed = {
                     scope.launch {
                         drawerState.open()

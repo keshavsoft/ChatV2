@@ -100,8 +100,6 @@ import com.example.compose.jetchat.conversation.messageFormatter
 import com.example.compose.jetchat.data.chatWsV1InitialMessages
 import com.example.compose.jetchat.theme.JetchatTheme
 import kotlinx.coroutines.launch
-import com.example.compose.jetchat.feature.chatws.v1.ChatWsUiState
-import com.example.compose.jetchat.feature.chatws.v1.ChatMessage
 
 /**
  * Entry point for a conversation screen.

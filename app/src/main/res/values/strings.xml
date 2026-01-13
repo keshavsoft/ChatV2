@@ -75,21 +75,7 @@
     <string name="menu_testbykeshav">TestbyKeshav</string>
     <string name="menu_droidcon">droidcon-nyc</string>
     <string name="menu_gps">Gps</string>
-    <string name="menu_sms">SMS Inbox</string>
-    <string name="menu_smsV1">SMS InboxV1</string>
-    <string name="menu_smsV2">SMS InboxV2</string>
-    <string name="menu_smsV3">SMS InboxV3</string>
-    <string name="menu_smsV4">SMS InboxV4</string>
-    <string name="menu_smsV5">SMS InboxV5</string>
-    <string name="menu_VoiceToTextV1">V1</string>
-    <string name="menu_VoiceToTextV2">V2</string>
-    <string name="menu_VoiceToTextV3">V3</string>
-    <string name="menu_VoiceToTextV4">V4</string>
-    <string name="menu_VoiceToTextV5">V5</string>
-    <string name="menu_VoiceToTextV6">V6</string>
-    <string name="menu_VoiceToTextV7">V7</string>
-    <string name="menu_VoiceToTextV8">V8</string>
-    <string name="menu_VoiceToTextV9">V9</string>
 
     <string name="menu_ChatWsV1">V1</string>
+    <string name="menu_ChatWsV2">V2</string>
 </resources>
