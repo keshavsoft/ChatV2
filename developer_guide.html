@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>AndroidMUI5 – Developer Guide (Add New Menu)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --bg: #0f172a;
+            --bg-alt: #020617;
+            --card: #0b1220;
+            --accent: #6366f1;
+            --accent-soft: rgba(99, 102, 241, 0.15);
+            --accent-strong: #4f46e5;
+            --border-subtle: rgba(148, 163, 184, 0.4);
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --code-bg: #020617;
+            --radius-lg: 18px;
+            --shadow-soft: 0 22px 45px rgba(15, 23, 42, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: radial-gradient(circle at top, #1d263d 0, #020617 55%);
+            color: var(--text-main);
+        }
+
+        .page {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 24px 16px 64px;
+        }
+
+        header {
+            padding: 18px 20px 18px;
+            border-radius: 999px;
+            background: linear-gradient(135deg,
+                    rgba(148, 163, 184, 0.14),
+                    rgba(30, 64, 175, 0.5));
+            border: 1px solid rgba(148, 163, 184, 0.55);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        header .title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #e5e7eb;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #020617 0, #020617 30%, #020617 100%);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            box-shadow: var(--shadow-soft);
+            padding: 18px 18px 18px;
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            margin: 0 0 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .steps {
+            display: grid;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .step {
+            border-radius: 14px;
+            padding: 12px 12px 10px;
+            background: radial-gradient(circle at top left, #111827 0, #020617 60%);
+            border: 1px solid rgba(75, 85, 99, 0.7);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            background: var(--accent-soft);
+            color: #c7d2fe;
+            border: 1px solid rgba(129, 140, 248, 0.8);
+        }
+
+        .step-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .step-body {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .step-body strong {
+            color: #e5e7eb;
+        }
+
+        .file-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 0.76rem;
+            color: #e5e7eb;
+            margin-bottom: 6px;
+        }
+
+        .file-tag code {
+            font-size: 0.78rem;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 12px;
+            padding: 10px 12px;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            overflow-x: auto;
+            margin: 6px 0 4px;
+        }
+
+        .code-block code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                "Liberation Mono", "Courier New", monospace;
+            font-size: 0.82rem;
+            color: #e5e7eb;
+        }
+
+        .columns-2 {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 14px;
+        }
+
+        .mini-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        ul,
+        ol {
+            margin: 4px 0 4px 18px;
+            padding: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 2px;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .pill {
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .checklist {
+            display: grid;
+            gap: 6px;
+            font-size: 0.86rem;
+            color: var(--text-muted);
+        }
+
+        .check-item {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .check-box {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            margin-top: 2px;
+        }
+
+        .hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .highlight {
+            color: #c4b5fd;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 28px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        @media (max-width: 860px) {
+            .layout {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="title-block">
+                <h1>Developer Guide · Add New Menu in Sidebar</h1>
+                <p>
+                    Visual walkthrough of <code>DEVELOPER_GUIDE.md</code> for AndroidMUI5
+                    (Jetchat + SMS + Voice to Text).
+                </p>
+            </div>
+            <div class="tag">
+                <span>Navigation Drawer</span>
+                <span>·</span>
+                <span>Jetpack Compose</span>
+            </div>
+        </header>
+
+        <section class="layout">
+            <!-- Left big guide -->
+            <div class="card">
+                <h2>Overview</h2>
+                <p>
+                    The left sidebar (drawer) is powered by a sealed class
+                    <code>DrawerDestination</code> and used in three main places:
+                </p>
+                <div class="pill-row">
+                    <div class="pill"><code>core/navigation/DrawerDestination.kt</code></div>
+                    <div class="pill"><code>components/JetchatDrawer.kt</code></div>
+                    <div class="pill"><code>NavActivity.kt</code></div>
+                </div>
+
+                <p style="margin-top: 10px;">
+                    Whenever you want to add a new item in the drawer
+                    (for example <span class="highlight">“Reports”</span> or
+                    <span class="highlight">“VoiceToTextV5”</span>), you will follow the same pattern:
+                </p>
+
+                <div class="steps">
+                    <!-- Step 1 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Add a label in <code>strings.xml</code></div>
+                        </div>
+                        <div class="step-body">
+                            <div class="file-tag">
+                                File: <code>app/src/main/res/values/strings.xml</code>
+                            </div>
+                            <p>
+                                Add a new string resource for the menu item text that will be shown in the drawer:
+                            </p>
+                            <div class="code-block">
+                                <code>&lt;string name="menu_reports"&gt;Reports&lt;/string&gt;</code>
+                            </div>
+                            <p class="hint">
+                                Naming pattern: <code>menu_*</code> keeps all drawer labels grouped together.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Create a new <code>DrawerDestination</code></div>
+                        </div>
+                        <div class="step-body">
+                            <div class="file-tag">
+                                File: <code>core/navigation/DrawerDestination.kt</code>
+                            </div>
+                            <p>
+                                Inside the sealed class, add a new object for your destination:
+                            </p>
+                            <div class="code-block">
+                                <code>
+                  data object Reports : DrawerDestination(<br />
+                  &nbsp;&nbsp;"Reports",<br />
+                  &nbsp;&nbsp;R.string.menu_reports<br />
+                  )<br />
+                </code>
+                            </div>
+                            <p>
+                                Then register it in the <strong>fromKey</strong> function so the app can map
+                                a key string back to this destination:
+                            </p>
+                            <div class="code-block">
+                                <code>
+                  companion object {<br />
+                  &nbsp;&nbsp;fun fromKey(key: String): DrawerDestination = when (key) {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;Composers.key -&gt; Composers<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;Gps.key -&gt; Gps<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;Reports.key -&gt; Reports <span class="highlight">// new</span><br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;else -&gt; Composers<br />
+                  &nbsp;&nbsp;}<br />
+                  }<br />
+                </code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-title">Place it into a drawer group</div>
+                        </div>
+                        <div class="step-body">
+                            <div class="file-tag">
+                                File: <code>components/JetchatDrawer.kt</code>
+                            </div>
+                            <p>
+                                The drawer is divided into groups like <strong>Chats</strong>,
+                                <strong>SMS</strong> and <strong>Voice to Text</strong>.
+                                To show your new menu item, add it to the matching list.
+                            </p>
+                            <div class="code-block">
+                                <code>
+                  // Chats section<br />
+                  DrawerItemHeader("Chats")<br /><br />
+                  val mainChatItems = listOf(<br />
+                  &nbsp;&nbsp;DrawerDestination.Composers,<br />
+                  &nbsp;&nbsp;DrawerDestination.TestByKeshav,<br />
+                  &nbsp;&nbsp;DrawerDestination.Droidcon,<br />
+                  &nbsp;&nbsp;DrawerDestination.Gps,<br />
+                  &nbsp;&nbsp;DrawerDestination.Reports <span class="highlight">// &lt;-- new</span><br />
+                  )<br />
+                </code>
+                            </div>
+                            <p class="hint">
+                                If it belongs under SMS or Voice to Text, add it there instead of
+                                <code>mainChatItems</code>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">4</div>
+                            <div class="step-title">Create the Composable screen</div>
+                        </div>
+                        <div class="step-body">
+                            <div class="file-tag">
+                                File: <code>feature/reports/ReportsScreen.kt</code> (example)
+                            </div>
+                            <p>
+                                Every menu destination simply renders a composable screen. The first version can
+                                be very small, you can enhance it later.
+                            </p>
+                            <div class="code-block">
+                                <code>
+                  @Composable<br />
+                  fun ReportsScreen(onBack: () -&gt; Unit = {}) {<br />
+                  &nbsp;&nbsp;Scaffold(<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;topBar = {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CenterAlignedTopAppBar(<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title = { Text("Reports") }<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                  &nbsp;&nbsp;) { innerPadding -&gt;<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;Box(Modifier.padding(innerPadding)) {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text("Reports screen coming soon…")<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                  &nbsp;&nbsp;}<br />
+                  }<br />
+                </code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">5</div>
+                            <div class="step-title">Wire it in <code>NavActivity</code></div>
+                        </div>
+                        <div class="step-body">
+                            <div class="file-tag">
+                                File: <code>NavActivity.kt</code>
+                            </div>
+                            <p>
+                                <code>NavActivity</code> decides which screen to show based on the current
+                                <code>selectedDestination</code>. Add your new destination to this <code>when</code>
+                                block.
+                            </p>
+                            <div class="code-block">
+                                <code>
+                  when (selectedDestination) {<br />
+                  &nbsp;&nbsp;DrawerDestination.Sms -&gt; { /* SMS screens */ }<br />
+                  &nbsp;&nbsp;DrawerDestination.VoiceToTextV4 -&gt; { /* V4 screen */ }<br />
+                  &nbsp;&nbsp;DrawerDestination.Reports -&gt; {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;ReportsScreen(onBack = {<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selectedDestination = DrawerDestination.Composers<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;})<br />
+                  &nbsp;&nbsp;}<br />
+                  &nbsp;&nbsp;else -&gt; { AndroidViewBinding(ContentMainBinding::inflate) }<br />
+                  }<br />
+                </code>
+                            </div>
+                            <p class="hint">
+                                Don’t forget the import at the top:
+                                <code>import com.example.compose.jetchat.feature.reports.ReportsScreen</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right quick reference -->
+            <div class="card">
+                <h2>Quick reference</h2>
+                <div class="columns-2">
+                    <div>
+                        <div class="mini-title">Files you will touch</div>
+                        <ul>
+                            <li><code>res/values/strings.xml</code></li>
+                            <li><code>core/navigation/DrawerDestination.kt</code></li>
+                            <li><code>components/JetchatDrawer.kt</code></li>
+                            <li><code>feature/&lt;yourFeature&gt;/YourScreen.kt</code></li>
+                            <li><code>NavActivity.kt</code></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="mini-title">Typical pattern</div>
+                        <ol>
+                            <li>Define label in XML</li>
+                            <li>Define <code>DrawerDestination</code> object</li>
+                            <li>Add to drawer list</li>
+                            <li>Create composable screen</li>
+                            <li>Add a <code>when</code> branch in <code>NavActivity</code></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3 class="mini-title" style="margin-top: 14px;">Checklist before commit</h3>
+                <div class="checklist">
+                    <div class="check-item">
+                        <div class="check-box"></div>
+                        <div>New <code>&lt;string&gt;</code> added with a unique name.</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-box"></div>
+                        <div><code>DrawerDestination</code> object created and registered in <code>fromKey()</code>.
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-box"></div>
+                        <div>Destination included in the right drawer group list.</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-box"></div>
+                        <div>Composable screen file compiles without errors.</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-box"></div>
+                        <div><code>NavActivity</code> shows your screen in the <code>when</code> block.</div>
+                    </div>
+                </div>
+
+                <h3 class="mini-title" style="margin-top: 14px;">Example: adding VoiceToTextV5</h3>
+                <p class="small">
+                    To add another VoiceToText version, you repeat the same flow:
+                </p>
+                <ol class="small">
+                    <li>Add <code>menu_voice_to_text_v5</code> in <code>strings.xml</code>.</li>
+                    <li>Add <code>data object VoiceToTextV5</code> to <code>DrawerDestination</code>.</li>
+                    <li>Include <code>VoiceToTextV5</code> in the Voice group list in <code>JetchatDrawerContent</code>.
+                    </li>
+                    <li>Create <code>VoiceToTextScreenV5.kt</code> in <code>feature/voicetotext</code>.</li>
+                    <li>Add a branch in <code>NavActivity</code> that calls <code>VoiceToTextScreenV5</code>.</li>
+                </ol>
+                <p class="hint">
+                    This keeps all Voice versions consistent, just like V1–V4 already implemented in the project.
+                </p>
+            </div>
+        </section>
+
+        <div class="footer">
+            AndroidMUI5 · Developer guide visualised · You can always cross-check with
+            <code>DEVELOPER_GUIDE.md</code> in the repository.
+        </div>
+    </div>
+</body>
+
+</html>
