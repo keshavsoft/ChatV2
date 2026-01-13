@@ -45,7 +45,7 @@ kotlinx_immutable = "0.3.8"
 ksp = "2.1.10-1.0.30"
 maps-compose = "3.1.1"
 # @keep
-minSdk = "21"
+minSdk = "23"
 okhttp = "4.12.0"
 okhttpVersion = "5.3.2"
 play-services-wearable = "18.1.0"
@@ -57,6 +57,7 @@ secrets = "2.0.1"
 # @keep
 targetSdk = "33"
 version-catalog-update = "0.8.5"
+foundation = "1.10.0"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -158,6 +159,7 @@ roborazzi-compose = { module = "io.github.takahirom.roborazzi:roborazzi-compose"
 roborazzi-rule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
 rometools-modules = { module = "com.rometools:rome-modules", version.ref = "rome" }
 rometools-rome = { module = "com.rometools:rome", version.ref = "rome" }
+androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
