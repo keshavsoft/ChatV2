@@ -79,63 +79,6 @@ fun JetchatDrawerContent(
         DrawerHeader()
         DividerItem()
 
-
-        // ----- SMS (collapsible) -----
-        ExpandableHeader(
-            title = "SMS",
-            expanded = smsExpanded,
-            onClick = { smsExpanded = !smsExpanded }
-        )
-
-        if (smsExpanded) {
-            val smsItems = listOf(
-                DrawerDestination.Sms,
-                DrawerDestination.SmsV1,
-                DrawerDestination.SmsV2,
-                DrawerDestination.SmsV3,
-                DrawerDestination.SmsV4,
-                DrawerDestination.SmsV5
-            )
-
-            smsItems.forEach { dest ->
-                ChatItem(
-                    text = stringResource(id = dest.labelRes),
-                    selected = selectedMenu == dest.key
-                ) {
-                    onChatClicked(dest.key)
-                }
-            }
-        }
-
-        // ----- Voice to Text (collapsible) -----
-        ExpandableHeader(
-            title = "Voice to Text",
-            expanded = voiceExpanded,
-            onClick = { voiceExpanded = !voiceExpanded }
-        )
-
-        if (voiceExpanded) {
-            val voiceItems = listOf(
-                DrawerDestination.VoiceToTextV1,
-                        DrawerDestination.VoiceToTextV2,
-                DrawerDestination.VoiceToTextV3,
-                        DrawerDestination.VoiceToTextV4,
-                DrawerDestination.VoiceToTextV5,
-                        DrawerDestination.VoiceToTextV6,
-                DrawerDestination.VoiceToTextV7
-                // later: VoiceToTextV2, VoiceToTextV3...
-            )
-
-            voiceItems.forEach { dest ->
-                ChatItem(
-                    text = stringResource(id = dest.labelRes),
-                    selected = selectedMenu == dest.key
-                ) {
-                    onChatClicked(dest.key)
-                }
-            }
-        }
-
 // ----- ChatWs (collapsible) -----
         ExpandableHeader(
             title = "ChatWs",
@@ -165,8 +108,7 @@ fun JetchatDrawerContent(
         val mainChatItems = listOf(
             DrawerDestination.Composers,
             DrawerDestination.TestByKeshav,
-            DrawerDestination.Droidcon,
-            DrawerDestination.Gps
+            DrawerDestination.Droidcon
         )
 
         mainChatItems.forEach { dest ->
