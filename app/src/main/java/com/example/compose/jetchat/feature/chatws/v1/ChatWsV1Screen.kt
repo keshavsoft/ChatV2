@@ -450,20 +450,20 @@ fun Message(
     val spaceBetweenAuthors = if (isLastMessageByAuthor) Modifier.padding(top = 8.dp) else Modifier
     Row(modifier = spaceBetweenAuthors) {
         if (isLastMessageByAuthor) {
-            // Avatar
-            Image(
-                modifier = Modifier
-                    .clickable(onClick = { onAuthorClick(msg.author) })
-                    .padding(horizontal = 16.dp)
-                    .size(42.dp)
-                    .border(1.5.dp, borderColor, CircleShape)
-                    .border(3.dp, MaterialTheme.colorScheme.surface, CircleShape)
-                    .clip(CircleShape)
-                    .align(Alignment.Top),
-                painter = painterResource(id = msg.authorImage),
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-            )
+            msg.authorImage?.let { res ->
+                Image(
+                    painter = painterResource(res),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .clickable { onAuthorClick(msg.author) }
+                        .padding(horizontal = 16.dp)
+                        .size(42.dp)
+                        .clip(CircleShape)
+                        .align(Alignment.Top),
+                    contentScale = ContentScale.Crop
+                )
+            } ?: Spacer(Modifier.width(74.dp))
+
         } else {
             // Space under avatar
             Spacer(modifier = Modifier.width(74.dp))
