@@ -6,7 +6,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Search
@@ -15,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -157,6 +155,18 @@ fun ChatWsV2Screen(onNavIconPressed: () -> Unit) {
     LaunchedEffect(Unit) {
         connectToServer.connect()
         connectToServer.incomingMessages.collect { raw ->
+            val isJson = raw.trim().startsWith("{") && raw.trim().endsWith("}")
+
+            if (!isJson){
+    uiState.addMessage(
+        ChatMessage(
+            author = "Server",
+            content = raw,
+            timestamp = timeNow,
+            messageType = WsMessageType.SYSTEM
+        )
+    )
+}else{
             val json = runCatching { org.json.JSONObject(raw) }.getOrNull()
 
             val type = when (json?.optString("Type")) {
@@ -180,6 +190,8 @@ fun ChatWsV2Screen(onNavIconPressed: () -> Unit) {
                     messageType = type    // 🔴 ADD THIS FIELD
                 )
             )
+}
+
         }
     }
 

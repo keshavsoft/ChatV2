@@ -21,11 +21,11 @@ fun Messages(
         state = scrollState
     ) {
     messages.forEachIndexed { i, msg ->
-            val prev = messages.getOrNull(i - 1)?.author
-            val next = messages.getOrNull(i + 1)?.author
+        val prev = messages.getOrNull(i - 1)?.author
+        val next = messages.getOrNull(i + 1)?.author
 
-            item {
-                MessageRow(
+        item {
+            MessageRow(
                     msg = msg,
                     isUserMe = msg.author == me,
                     isFirstMessageByAuthor = prev != msg.author,
